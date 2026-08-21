@@ -3,7 +3,7 @@ import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { clearCart, decreaseCartItem, removeCartItem, replaceCart } from "./store/cartSlice"
 
-const API_BASE = "http://localhost:5000"
+const API_BASE = import.meta.env.VITE_API_URL
 
 const axiosInstance = axios.create({
   baseURL: API_BASE,
@@ -585,14 +585,14 @@ function App() {
   }
 
   useEffect(() => {
-    axios.get(API_BASE + "/api/products")
+    axios.get(`${API_BASE}/api/products`)
       .then(res => {
         setProducts(res.data)
         setFilteredProducts(res.data)
         setLoading(false)
       })
       .catch(err => {
-        setError("Could not connect to the API server. Please verify the server is running on http://localhost:5000.")
+        setError(`Could not connect to the API server. Please verify the server is running on ${API_BASE}.`)
         setLoading(false)
       })
 
