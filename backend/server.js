@@ -483,7 +483,8 @@ app.get("/api/products", async (req, res) => {
     })
     res.json(products)
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products" })
+    console.error("Products fetch error:", error)
+    res.status(500).json({ error: "Failed to fetch products", details: error.message })
   }
 })
 
@@ -842,6 +843,6 @@ app.get("/api/orders", authenticateJWT, async (req, res) => {
   }
 })
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 
 app.listen(PORT)
